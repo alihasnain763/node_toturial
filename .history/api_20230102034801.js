@@ -1,0 +1,13 @@
+const express = require('express');
+const getData = require('./mongodb');
+
+const app = express();
+
+app.get('/', (req, res) => {
+
+    res.send({name: 'anil'})
+
+});
+
+
+app.listen(5000)

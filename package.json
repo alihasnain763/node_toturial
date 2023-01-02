@@ -1,0 +1,25 @@
+{
+  "name": "tute",
+  "version": "1.0.0",
+  "description": "node js practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "shoper"
+  ],
+  "author": "Ali Hasnain",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "colors": "^1.4.0",
+    "ejs": "^3.1.8",
+    "eslint-plugin-mongodb": "^1.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.18.2",
+    "mongodb": "^4.13.0",
+    "nodemon": "^2.0.20",
+    "simple-node-logger": "^21.8.12"
+  }
+}
