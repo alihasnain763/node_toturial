@@ -1,61 +1,38 @@
-const mongoose = require('mongoose');
+const express = require('express');
 
-mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/e-comm");
-const  ProductSch = new mongoose.Schema({
-    name: String,
-    price: Number,
-    brand: String,
-    category: String
-});
-const saveInDB = async() => {
+require('./config')
 
-    const ProductModel = mongoose.model('product', ProductSch);
-    let data = await new ProductModel(
-        {
-            name: "m8",
-            price: 3434,
-            brand: "haper",
-            category: "koper"
+const Product =  require('./product')
 
-        }
-        
-        );
-    console.log(data)
-    let result  = await data.save();
-    console.log(result)
+const app = express();
+app.use(express.json());
+app.post("/create", async (req, res)=>{
+    let data = new Product(req.body);
+    let result = await data.save();
+    console.log(result);
+    res.send(result)
+})
 
-};
+app.get("/list", async (req, res) => {
+    let data = await Product.find();
+    res.send(data)
+})
 
-const updateInDb = async () => {
-    mongoose.set("strictQuery", false);
-    const Product = mongoose.model('product', ProductSch);
+app.put("/update/:_id", async (req, res) => {
+    console.log(req.params)
     let data = await Product.updateOne(
+        // condition
+        req.params,
         {
-            name: "m8"
-        },
-        {
-            $set: {price: 7943574834}
+            $set: req.body
         }
-        
-        )
-        console.log(data)
-    }
-    
-    const deleteInDb = async () => {
-    const Product = mongoose.model('product', ProductSch);
-    let data  = await Product.deleteOne(
-        {
-            name: "m8"
-        }
+    );
+   res.send(data)
+})
+app.delete("/delete/:_id", async (req, res) => {
+    console.log(req.params)
+    let data = await Product.deleteOne(req.params);
+   res.send(data)
+})
 
-        )
-}
-    const findInDb = async () => {
-    const Product = mongoose.model('product', ProductSch);
-    let data  = await Product.find()
-    console.log(data)
-}
-// updateInDb()
-// saveInDB()
-findInDb();
+app.listen(5000);
